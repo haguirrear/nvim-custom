@@ -53,11 +53,23 @@ cmp.setup {
 }
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
+--  THIS WAS BREAKING
+-- cmp.setup.cmdline({ '/', '?' }, {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     {
+--       name = 'buffer',
+--       get_bufnrs = function()
+--         local buf = vim.api.nvim_get_current_buf()
+--         local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+--         if byte_size > 1024 * 1024 then -- 1 Megabyte max
+--           return {}
+--         end
+--         return { buf }
+--       end
+--
+--     }
+--   }
+-- })
 
 -- vim: ts=2 sts=2 sw=2 et
