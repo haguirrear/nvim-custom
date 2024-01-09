@@ -106,7 +106,8 @@ local servers = {
   tailwindcss = {},
   emmet_language_server = {},
   htmx = {},
-  jsonls = {}
+  jsonls = {},
+  phpactor = {},
 
 }
 
