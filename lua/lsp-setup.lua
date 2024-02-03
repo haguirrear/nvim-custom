@@ -92,7 +92,7 @@ local servers = {
   },
   ruff_lsp = {
   },
-  -- rust_analyzer = {},
+  -- rust_analyzer = {},:warnings
   tsserver = {
     -- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" }
   },
@@ -111,6 +111,8 @@ local servers = {
   jsonls = {},
   phpactor = {},
   sqlls = {},
+  terraformls = {},
+  templ = {},
 }
 
 -- Setup neovim lua configuration
