@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Custom keymaps
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = "Go to explorer file" })
-vim.keymap.set('n', '<M-n>', ':NvimTreeToggle<CR>', { desc = 'nvim-tree: Toggle tree' })
+vim.keymap.set('n', '<leader>m', ':NvimTreeToggle<CR>', { desc = 'nvim-tree: Toggle tree' })
 vim.keymap.set('n', '<ESC>', ":noh <CR>", { desc = "Clear highlights" })
 
 -- Terminal
