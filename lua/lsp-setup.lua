@@ -113,6 +113,7 @@ local servers = {
   sqlls = {},
   terraformls = {},
   templ = {},
+  graphql = {}
 }
 
 -- Setup neovim lua configuration
