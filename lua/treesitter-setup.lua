@@ -25,6 +25,7 @@ vim.defer_fn(function()
       'vim',
       'bash',
       "dockerfile",
+      "proto",
     },
 
 
