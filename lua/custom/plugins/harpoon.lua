@@ -11,7 +11,7 @@ return {
     local term = require("harpoon.term")
     local tmux = require("harpoon.tmux")
 
-    vim.keymap.set("n", "<leader>m", mark.add_file, { desc = "Mark file with Harpoon" })
+    vim.keymap.set("n", "<leader>z", mark.add_file, { desc = "Mark file with Harpoon" })
     vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Toggle Harpoon quick menu" })
 
     vim.keymap.set("n", "<M-1>", function() ui.nav_file(1) end, { desc = "Go to file 1 with Harpoon" })
