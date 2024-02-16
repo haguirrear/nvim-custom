@@ -26,7 +26,8 @@ vim.defer_fn(function()
       'bash',
       "dockerfile",
       "proto",
-      "graphql"
+      "graphql",
+      "astro",
     },
 
 

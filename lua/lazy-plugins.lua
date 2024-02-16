@@ -151,12 +151,21 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    -- opts = function(_, opts)
+    --   -- opts = require('lualine').get_config()
+    --   -- table.insert(opts.theme, 'onedark')
+    --   table.insert(opts.sections.lualine_c, "encoding")
+    -- end
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
+      },
+      sections = {
+        lualine_c = { { 'filename', path = 1, } }
       },
     },
   },
