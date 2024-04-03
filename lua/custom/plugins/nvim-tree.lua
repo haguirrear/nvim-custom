@@ -34,6 +34,11 @@ return {
       diagnostics = {
         enable = true,
       },
+      renderer = {
+        indent_markers = {
+          enable = true,
+        },
+      }
     }
   end,
 }
