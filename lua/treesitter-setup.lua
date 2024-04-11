@@ -28,6 +28,8 @@ vim.defer_fn(function()
       "proto",
       "graphql",
       "astro",
+      "http",
+      "json",
     },
 
 

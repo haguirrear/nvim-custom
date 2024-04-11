@@ -47,8 +47,9 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Go half page down", noremap = 
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Go half page up", noremap = true })
 
 -- Buffers
-vim.keymap.set("n", "<leader>n", ":bn<CR>", { desc = "Go to next buffer" })
-vim.keymap.set("n", "<leader>p", ":bprev<CR>", { desc = "Go to prev buffer" })
+vim.keymap.set("n", "<leader>bn", ":bn<CR>", { desc = "Go to next buffer" })
+vim.keymap.set("n", "<leader>bp", ":bprev<CR>", { desc = "Go to prev buffer" })
+vim.keymap.set("n", "<leader>bk", ":%bd|e#<CR>", { desc = "Close all buffers except current" })
 
 -- Paste without reseting paste register
 vim.keymap.set('x', "<leader>p", "\"_dP", { desc = "Paste with deleting and pasting", noremap = true })

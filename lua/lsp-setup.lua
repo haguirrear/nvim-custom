@@ -54,6 +54,8 @@ require('which-key').register {
   ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
   ['<leader>x'] = { name = 'E[X]ecute', _ = 'which_key_ignore' },
+  ['<leader>R'] = { name = '[R]request', _ = 'which_key_ignore' },
+  ['<leader>b'] = { name = '[b]uffers', _ = 'which_key_ignore' },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
@@ -116,6 +118,7 @@ local servers = {
   templ = {},
   graphql = {},
   astro = {},
+  lemminx = {}
 }
 
 -- Setup neovim lua configuration
