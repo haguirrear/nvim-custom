@@ -112,13 +112,16 @@ local servers = {
   emmet_language_server = {},
   htmx = {},
   jsonls = {},
-  phpactor = {},
+  -- phpactor = {},
   sqlls = {},
   terraformls = {},
   templ = {},
   graphql = {},
   astro = {},
-  lemminx = {}
+  lemminx = {},
+  groovyls = {
+    filetypes = { "groovy", "groovity" }
+  }
 }
 
 -- Setup neovim lua configuration

@@ -39,7 +39,10 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    'L3MON4D3/LuaSnip',
+    build = "make install_jsregexp"
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',

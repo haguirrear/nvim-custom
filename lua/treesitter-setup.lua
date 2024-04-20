@@ -30,6 +30,7 @@ vim.defer_fn(function()
       "astro",
       "http",
       "json",
+      "groovy",
     },
 
 
