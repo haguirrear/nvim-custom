@@ -53,4 +53,19 @@ vim.keymap.set("n", "<leader>bk", ":%bd|e#<CR>", { desc = "Close all buffers exc
 
 -- Paste without reseting paste register
 vim.keymap.set('x', "<leader>p", "\"_dP", { desc = "Paste with deleting and pasting", noremap = true })
+
+-- Toggle line numbers
+function ToggleLineNumbers()
+  if vim.wo.number then
+    vim.wo.number = false
+    vim.wo.relativenumber = true
+  else
+    vim.wo.number = true
+    vim.wo.relativenumber = false
+  end
+end
+
+vim.keymap.set('n', '<leader>tm', ':lua ToggleLineNumbers()<CR>',
+  { desc = "Toggle line numbers", noremap = true, silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et

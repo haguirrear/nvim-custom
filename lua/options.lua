@@ -62,6 +62,7 @@ vim.opt.smartindent = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 
-
+-- breadcrumbs
+-- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
