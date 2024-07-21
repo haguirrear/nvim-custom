@@ -87,6 +87,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   gopls = {},
+  golangci_lint_ls = {},
   pyright = {
     pyright = {
       autoImportCompletion = true,
