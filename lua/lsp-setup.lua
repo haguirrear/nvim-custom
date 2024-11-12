@@ -87,7 +87,6 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   gopls = {},
-  golangci_lint_ls = {},
   pyright = {
     pyright = {
       autoImportCompletion = true,
@@ -129,7 +128,19 @@ local servers = {
   lemminx = {},
   groovyls = {
     filetypes = { "groovy", "groovity" }
-  }
+  },
+  yamlls = {
+    validate = true,
+    format = {
+      enable = true,
+    },
+    schemas = {},
+    schemaStore = {
+      enable = true,
+    },
+  },
+  -- java_language_server = {},
+  jdtls = {},
 }
 
 -- Setup neovim lua configuration
@@ -148,6 +159,10 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
   function(server_name)
+    if server_name == "jdtls" then
+      return
+    end
+
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,

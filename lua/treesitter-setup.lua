@@ -31,6 +31,7 @@ vim.defer_fn(function()
       "http",
       "json",
       "groovy",
+      "java",
     },
 
 
