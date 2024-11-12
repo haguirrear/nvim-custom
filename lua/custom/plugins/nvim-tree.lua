@@ -38,6 +38,10 @@ return {
         indent_markers = {
           enable = true,
         },
+      },
+      git = {
+        enable = true,
+        timeout = 1000,
       }
     }
   end,
