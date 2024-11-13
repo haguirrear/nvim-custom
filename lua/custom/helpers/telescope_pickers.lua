@@ -463,5 +463,46 @@ function telescopePickers.prettyLspReferences(localOptions)
     require("telescope.builtin").lsp_references(options)
 end
 
+function telescopePickers.prettyLspImplementations(localOptions)
+    if localOptions ~= nil and type(localOptions) ~= "table" then
+        print("Options must be a table.")
+        return
+    end
+
+    local options = localOptions or {}
+
+    local originalEntryMaker = telescopeMakeEntryModule.gen_from_quickfix(options)
+
+    options.entry_maker = function(line)
+        local originalEntryTable = originalEntryMaker(line)
+
+        local displayer = telescopeEntryDisplayModule.create({
+            separator = " ", -- Telescope will use this separator between each entry item
+            items = {
+                { width = fileTypeIconWidth },
+                { width = nil },
+                { remaining = true },
+            },
+        })
+
+        originalEntryTable.display = function(entry)
+            local tail, pathToDisplay = telescopePickers.getPathAndTail(entry.filename)
+            local tailForDisplay = tail .. " "
+            local icon, iconHighlight = telescopeUtilities.get_devicons(tail)
+            local coordinates = string.format("  %s:%s ", entry.lnum, entry.col)
+
+            return displayer({
+                { icon,          iconHighlight },
+                tailForDisplay .. coordinates,
+                { pathToDisplay, "TelescopeResultsComment" },
+            })
+        end
+
+        return originalEntryTable
+    end
+
+    require("telescope.builtin").lsp_implementations(options)
+end
+
 -- Return the module for use
 return telescopePickers
