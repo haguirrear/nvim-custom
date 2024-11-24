@@ -141,6 +141,7 @@ local servers = {
   },
   -- java_language_server = {},
   jdtls = {},
+  elixirls = {}
 }
 
 -- Setup neovim lua configuration

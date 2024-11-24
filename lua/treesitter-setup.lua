@@ -32,6 +32,7 @@ vim.defer_fn(function()
       "json",
       "groovy",
       "java",
+      "elixir",
     },
 
 
