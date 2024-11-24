@@ -29,7 +29,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Custom keymaps
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = "Go to explorer file" })
 vim.keymap.set('n', '<leader>m', ':NvimTreeToggle<CR>', { desc = 'nvim-tree: Toggle tree' })
 vim.keymap.set('n', '<ESC>', ":noh <CR>", { desc = "Clear highlights" })
 
@@ -52,14 +51,18 @@ vim.keymap.set("n", "<leader>bp", ":bprev<CR>", { desc = "Go to prev buffer" })
 vim.keymap.set("n", "<leader>bk", ":%bd|e#<CR>", { desc = "Close all buffers except current" })
 
 -- Paste without reseting paste register
-vim.keymap.set('x', "<leader>p", "\"_dP", { desc = "Paste with deleting and pasting", noremap = true })
+require("which-key").add({
+  { "<leader>p", "\"_dP", desc = "Paste without reseting paste register", mode = "x", noremap = true }
+})
 
 -- Toggle line numbers
 function ToggleLineNumbers()
-  if vim.wo.number then
-    vim.wo.number = false
+  if not vim.wo.relativenumber then
+    print("Setting relative number")
     vim.wo.relativenumber = true
+    vim.wo.nu = true
   else
+    print("Setting absolute number")
     vim.wo.number = true
     vim.wo.relativenumber = false
   end

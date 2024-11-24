@@ -51,25 +51,45 @@ local on_attach = function(client, bufnr)
 end
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-  ['<leader>x'] = { name = 'E[X]ecute', _ = 'which_key_ignore' },
-  ['<leader>R'] = { name = '[R]request', _ = 'which_key_ignore' },
-  ['<leader>b'] = { name = '[b]uffers', _ = 'which_key_ignore' },
-}
+-- require('which-key').register {
+--   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+--   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+--   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+--   ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+--   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+--   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+--   ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
+--   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+--   ['<leader>x'] = { name = 'E[X]ecute', _ = 'which_key_ignore' },
+--   ['<leader>R'] = { name = '[R]request', _ = 'which_key_ignore' },
+--   ['<leader>b'] = { name = '[b]uffers', _ = 'which_key_ignore' },
+-- }
+
+require("which-key").add({
+  { "<leader>b", group = "[B]uffers" },
+  { "<leader>c", group = "[C]ode" },
+  { "<leader>d", group = "[D]ocument" },
+  { "<leader>g", group = "[G]it" },
+  { "<leader>h", group = "Git [H]unk" },
+  { "<leader>r", group = "[R]ename" },
+  { "<leader>s", group = "[S]earch" },
+  { "<leader>t", group = "[T]oggle" },
+  { "<leader>w", group = "[W]orkspace" },
+  { "<leader>x", group = "E[X]ecute" },
+  {
+    mode = "v",
+    { "<leader>",  desc = "VISUAL <leader>" },
+    { "<leader>h", group = "Git [H]unk" }
+  }
+
+})
+
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
-require('which-key').register({
-  ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
-}, { mode = 'v' })
+-- require('which-key').register({
+--   ['<leader>'] = { name = 'VISUAL <leader>' },
+--   ['<leader>h'] = { 'Git [H]unk' },
+-- }, { mode = 'v' })
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -103,9 +123,9 @@ local servers = {
   ruff_lsp = {
   },
   -- rust_analyzer = {},:warnings
-  tsserver = {
-    -- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" }
-  },
+  -- tsserver = {
+  --   -- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" }
+  -- },
   html = {},
   lua_ls = {
     Lua = {
@@ -141,7 +161,14 @@ local servers = {
   },
   -- java_language_server = {},
   jdtls = {},
-  elixirls = {}
+  elixirls = {},
+  ts_ls = {},
+  denols = {},
+}
+
+-- For Deno
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
 }
 
 -- Setup neovim lua configuration
@@ -171,6 +198,27 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
+
+  ["ts_ls"] = function()
+    local nvim_lsp = require('lspconfig')
+    nvim_lsp["ts_ls"].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers["ts_ls"],
+      root_dir = nvim_lsp.util.root_pattern("package.json"),
+      single_file_support = false
+    }
+  end,
+
+  ["denols"] = function()
+    local nvim_lsp = require('lspconfig')
+    nvim_lsp["denols"].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers["denols"],
+      root_dir = nvim_lsp.util.root_pattern("deno.json"),
+    }
+  end
 }
 
 -- vim: ts=2 sts=2 sw=2 et
