@@ -33,6 +33,7 @@ vim.defer_fn(function()
       "groovy",
       "java",
       "elixir",
+      "heex",
     },
 
 
