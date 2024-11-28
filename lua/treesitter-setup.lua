@@ -34,6 +34,7 @@ vim.defer_fn(function()
       "java",
       "elixir",
       "heex",
+      "templ",
     },
 
 
