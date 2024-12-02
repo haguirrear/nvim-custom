@@ -28,7 +28,7 @@ local on_attach = function(client, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Signature Documentation" })
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -84,6 +84,26 @@ require("which-key").add({
 
 })
 
+-- UI customizations
+
+local border = {
+  { "🭽", "FloatBorder" },
+  { "▔", "FloatBorder" },
+  { "🭾", "FloatBorder" },
+  { "▕", "FloatBorder" },
+  { "🭿", "FloatBorder" },
+  { "▁", "FloatBorder" },
+  { "🭼", "FloatBorder" },
+  { "▏", "FloatBorder" },
+}
+--
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or border
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
 -- require('which-key').register({
@@ -120,8 +140,7 @@ local servers = {
       },
     },
   },
-  ruff_lsp = {
-  },
+  ruff = {},
   -- rust_analyzer = {},:warnings
   -- tsserver = {
   --   -- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" }

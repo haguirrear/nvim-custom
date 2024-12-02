@@ -50,6 +50,9 @@ cmp.setup {
     { name = 'nvim_lsp_signature_help' },
     { name = 'buffer' },
   },
+  window = {
+    documentation = cmp.config.window.bordered(),
+  }
 }
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
