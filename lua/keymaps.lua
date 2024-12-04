@@ -38,10 +38,6 @@ vim.keymap.set('t', '<C-x>', '<C-\\><C-n>',
 
 
 -- Movement
-vim.keymap.set("i", "<C-h>", "<Left>", { desc = "Move left" })
-vim.keymap.set("i", "<C-l>", "<Right>", { desc = "Move right" })
-vim.keymap.set("i", "<C-j>", "<Down>", { desc = "Move down" })
-vim.keymap.set("i", "<C-k>", "<Up>", { desc = "Move up" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Go half page down", noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Go half page up", noremap = true })
 
