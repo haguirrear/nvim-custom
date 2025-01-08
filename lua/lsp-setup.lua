@@ -126,7 +126,10 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  gopls = {},
+  gopls = {
+    verboseOutput = true,
+    logLevel = "debug",
+  },
   pyright = {
     pyright = {
       autoImportCompletion = true,
@@ -237,7 +240,30 @@ mason_lspconfig.setup_handlers {
       settings = servers["denols"],
       root_dir = nvim_lsp.util.root_pattern("deno.json"),
     }
+  end,
+
+  ["gopls"] = function()
+    local nvim_lsp = require('lspconfig')
+    nvim_lsp["gopls"].setup {
+      on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+          vim.lsp.diagnostic.on_publish_diagnostics,
+          {
+            -- underline = false,
+            -- virtual_text = false,
+            update_in_insert = false,
+          }
+        )
+      end,
+      capabilities = capabilities,
+      settings = servers["gopls"],
+      -- flags = {
+      --   debounce_text_changes = 150,
+      -- }
+    }
   end
+
 }
 
 -- vim: ts=2 sts=2 sw=2 et
