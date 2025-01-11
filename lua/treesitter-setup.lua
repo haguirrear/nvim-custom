@@ -35,6 +35,7 @@ vim.defer_fn(function()
       "elixir",
       "heex",
       "templ",
+      "jsdoc"
     },
 
 
