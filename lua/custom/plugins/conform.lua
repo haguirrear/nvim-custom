@@ -5,12 +5,20 @@ return {
   config = function()
     require("conform").setup({
       formatters_by_ft = {
-        graphql = { "prettier", stop_after_first = true }
+        graphql = { "prettier", stop_after_first = true },
+        javascript = {
+          "prettier",
+          -- stop_after_first = true,
+          -- extra_args = {
+          --   "--semi", "true",
+          -- }
+        },
+        typescript = { "prettier" },
       },
     })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = { "*.graphql" },
+      pattern = { "*.graphql", "*.js", "*.ts" },
       callback = function(args)
         print("formatting with conform")
         require("conform").format({
