@@ -41,6 +41,8 @@ require('lazy').setup({
   },
   {
     'L3MON4D3/LuaSnip',
+    dependencies = { "rafamadriz/friendly-snippets" },
+    version = 'v2.*',
     build = "make install_jsregexp"
   },
   {
@@ -241,6 +243,6 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
-}, {})
+})
 
 -- vim: ts=2 sts=2 sw=2 et

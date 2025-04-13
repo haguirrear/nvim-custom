@@ -1,11 +1,13 @@
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
+--
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
 cmp.setup {
+  enabled = false,
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -13,7 +15,7 @@ cmp.setup {
   },
   -- preselect = cmp.PreselectMode.None, -- Ignore LSP preselected item (sometimes it is not the first one)
   view = {
-    entries = { name = 'custom', selection_order = 'near_cursor' }
+    entries = { name = 'custom', selection_order = 'top_down' }
   },
   completion = {
     completeopt = 'menu,menuone,noinsert',
