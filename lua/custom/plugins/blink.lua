@@ -1,13 +1,19 @@
 return {
   'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
-  dependencies = { 'echasnovski/mini.icons', version = '*' },
+  dependencies = {
+    { 'echasnovski/mini.icons', version = '*' },
+    { 'L3MON4D3/LuaSnip',       version = 'v2.*' },
+  },
   -- use a release tag to download pre-built binaries
   version = '1.*',
   -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
   -- build = 'cargo build --release',
   -- If you use nix, you can build from source using latest nightly rust with:
   -- build = 'nix run .#build-plugin',
+  init = function()
+    require('luasnip.loaders.from_vscode').lazy_load()
+  end,
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -27,6 +33,7 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
+    signature = { enabled = true },
     keymap = {
       preset = 'enter',
       -- ['<CR>'] = { 'select_and_accept', 'fallback' },
@@ -45,6 +52,12 @@ return {
 
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
+      list = {
+        selection = {
+          preselect = true,
+          auto_insert = true,
+        },
+      },
       documentation = { auto_show = false },
       menu = {
         draw = {
@@ -107,6 +120,9 @@ return {
     fuzzy = { implementation = "prefer_rust_with_warning" },
     snippets = {
       preset = 'luasnip',
+      -- expand = function(snippets, _)
+      --   require('luasnip').lsp_expand(snippet)
+      -- end
     }
   },
   opts_extend = { "sources.default" }

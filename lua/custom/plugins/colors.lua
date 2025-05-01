@@ -11,6 +11,8 @@ return {
       custom_highlights = function(colors)
         return {
           LineNr = { fg = colors.overlay0 }, -- Color for absolute line numbers
+          CursorLine = { bg = colors.surface0 },
+          -- BlinkCmpKind = { fg = colors.flamingo },
         }
       end
     }

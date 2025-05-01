@@ -203,10 +203,13 @@ vim.g.markdown_fenced_languages = {
 -- Setup neovim lua configuration
 require('neodev').setup()
 
+-- Old nvim-cmp capabilities
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+-- This includes the lsp basic capablities
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
@@ -252,26 +255,33 @@ mason_lspconfig.setup_handlers {
 
   ["gopls"] = function()
     local nvim_lsp = require('lspconfig')
-    nvim_lsp["gopls"].setup {
-      on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-          vim.lsp.diagnostic.on_publish_diagnostics,
-          {
-            -- underline = false,
-            -- virtual_text = false,
-            update_in_insert = false,
-          }
-        )
-      end,
-      capabilities = capabilities,
-      settings = servers["gopls"],
-      -- flags = {
-      --   debounce_text_changes = 150,
-      -- }
-    }
-  end
 
+    -- Search for the mise gopls and prioritize it if found
+    local get_gopls = function()
+      local all = vim.fn.systemlist("which -a gopls 2>/dev/null")
+      for _, p in pairs(all) do
+        if p:match("mise") and vim.fn.executable(p) == 1 then
+          return { p }
+        end
+      end
+
+      return nil
+    end
+
+    local config = {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers["gopls"],
+      cmd = { vim.fn.exepath("gopls") },
+      filetypes = (servers["gopls"] or {}).filetypes,
+    }
+    local cmd = get_gopls()
+    if cmd then
+      config.cmd = cmd
+    end
+
+    nvim_lsp["gopls"].setup(config)
+  end
 }
 
 
