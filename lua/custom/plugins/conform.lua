@@ -22,6 +22,7 @@ return {
     -- Define your formatters
     formatters_by_ft = {
       graphql = { "prettier", stop_after_first = true },
+      astro = { "prettier", stop_after_first = true },
       javascript = {
         "prettier",
         -- stop_after_first = true,
