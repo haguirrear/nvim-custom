@@ -13,6 +13,19 @@ return {
   -- build = 'nix run .#build-plugin',
   init = function()
     require('luasnip.loaders.from_vscode').lazy_load()
+
+    -- Cancels snippet if go into normal mode. It works????
+    vim.api.nvim_create_autocmd('ModeChanged', {
+      pattern = '*',
+      callback = function()
+        if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+            and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require('luasnip').session.jump_active
+        then
+          require('luasnip').unlink_current()
+        end
+      end
+    })
   end,
 
   ---@module 'blink.cmp'
@@ -36,6 +49,8 @@ return {
     signature = { enabled = true },
     keymap = {
       preset = 'enter',
+      -- ['<Tab>'] = { 'fallback' },
+      -- ['<S-Tab>'] = { 'fallback' },
       -- ['<CR>'] = { 'select_and_accept', 'fallback' },
     },
     cmdline = {

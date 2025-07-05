@@ -15,7 +15,7 @@ local workspace_dir = vim.env.HOME .. '/jdtls-workspace/' .. project_name
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   cmd = {
-    '/Users/hector.aguirre/.asdf/installs/java/openjdk-22.0.1/bin/java',
+    '/Users/hector.aguirre/.local/share/mise/installs/java/22.0.2/bin/java',
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -55,11 +55,11 @@ local config = {
         runtimes = {
           {
             name = "JavaSE-1.8",
-            path = "/Users/hector.aguirre/.asdf/installs/java/corretto-8.412.08.1/",
+            path = "/Users/hector.aguirre/.local/share/mise/installs/java/corretto-8.442.06.1/",
           },
           {
             name = "JavaSE-20",
-            path = "/Users/hector.aguirre/.asdf/installs/java/openjdk-20/",
+            path = "/Users/hector.aguirre/.local/share/mise/installs/java/22.0.2/",
           },
         }
       },
@@ -117,7 +117,7 @@ local config = {
     },
   },
   -- Needed for auto-completion with method signatures and placeholders
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  capabilities = require('lsp-setup').capabilities,
   flags = {
     allow_incremental_sync = true,
   },
@@ -126,4 +126,15 @@ local config = {
     -- bundles = bundles
   },
 }
+
+config["on_attach"] = function(client, bufnr)
+  -- local _, _ = pcall(vim.lsp.codelens.refresh)
+  -- require("jdtls").setup_dap({ hotcodereplace = "auto" })
+  require("lsp-setup").on_attach(client, bufnr)
+  -- local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+  -- if status_ok then
+  --   jdtls_dap.setup_dap_main_class_configs()
+  -- end
+end
+
 require('jdtls').start_or_attach(config)

@@ -53,7 +53,7 @@ vim.cmd [[set list]]
 vim.cmd [[set listchars=tab:»\ ,space:·]]
 
 -- Coloscheme
-vim.cmd.colorscheme('catppuccin-mocha')
+vim.cmd.colorscheme('catppuccin-macchiato')
 
 -- Indenting
 vim.opt.expandtab = true

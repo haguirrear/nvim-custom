@@ -7,6 +7,13 @@ vim.filetype.add {
 
 vim.filetype.add {
   extension = {
+    jsonld = "json"
+  }
+}
+
+
+vim.filetype.add {
+  extension = {
     jinja = "html"
   }
 }

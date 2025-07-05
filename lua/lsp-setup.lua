@@ -163,6 +163,7 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  cssls = {},
   tailwindcss = {},
   emmet_language_server = {},
   htmx = {},
@@ -193,6 +194,7 @@ local servers = {
   ts_ls = {},
   denols = {},
   taplo = {},
+  csharp_ls = {},
 }
 
 -- For Deno
@@ -231,6 +233,7 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
+
 
   ["ts_ls"] = function()
     local nvim_lsp = require('lspconfig')
@@ -285,6 +288,7 @@ mason_lspconfig.setup_handlers {
 }
 
 
+
 -- For python
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
@@ -300,5 +304,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
   desc = 'LSP: Disable hover capability from Ruff',
 })
+
+return {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
 
 -- vim: ts=2 sts=2 sw=2 et

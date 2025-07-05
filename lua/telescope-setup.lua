@@ -83,6 +83,21 @@ local function prettyGrepPicker(picker_name)
   end
 end
 
+
+local function prettyGrepPickerDirectory(picker_name)
+  return function()
+    local dir = vim.fn.input("Directory to grep in: ", "", "dir")
+
+    require('custom.helpers.telescope_pickers').prettyGrepPicker({
+      picker = picker_name,
+      options = {
+        prompt_title = "Grep in " .. dir,
+        search_dirs = { dir }
+      }
+    })
+  end
+end
+
 local function prettyFilesPicker(picker_name)
   return function()
     require('custom.helpers.telescope_pickers').prettyFilesPicker({ picker = picker_name })
@@ -109,5 +124,6 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 
 
 
+vim.keymap.set('n', '<leader>sD', prettyGrepPickerDirectory("live_grep"), { desc = '[S]earch in [D]irectory' })
 
 -- vim: ts=2 sts=2 sw=2 et
