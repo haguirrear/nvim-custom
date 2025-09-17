@@ -62,6 +62,10 @@ vim.opt.smartindent = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 
+-- Shell (for not usinz zsh (slow) for comman execution from some plugins (fugitive))
+vim.opt.shell = "/usr/bin/env bash"
+
+
 -- breadcrumbs
 -- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 -- The line beneath this is called `modeline`. See `:help modeline`

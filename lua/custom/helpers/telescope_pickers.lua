@@ -463,6 +463,115 @@ function telescopePickers.prettyLspReferences(localOptions)
     require("telescope.builtin").lsp_references(options)
 end
 
+function telescopePickers.prettyLspDefinitions(localOptions)
+    if localOptions ~= nil and type(localOptions) ~= "table" then
+        print("Options must be a table.")
+        return
+    end
+
+    local options = localOptions or {}
+
+    local originalEntryMaker = telescopeMakeEntryModule.gen_from_quickfix(options)
+
+    options.entry_maker = function(line)
+        local originalEntryTable = originalEntryMaker(line)
+
+        local displayer = telescopeEntryDisplayModule.create({
+            separator = " ", -- Telescope will use this separator between each entry item
+            items = {
+                { width = fileTypeIconWidth },
+                { width = nil },
+                { remaining = true },
+            },
+        })
+
+        originalEntryTable.display = function(entry)
+            local tail, pathToDisplay = telescopePickers.getPathAndTail(entry.filename)
+            local tailForDisplay = tail .. " "
+            local icon, iconHighlight = telescopeUtilities.get_devicons(tail)
+            local coordinates = string.format("  %s:%s ", entry.lnum, entry.col)
+
+            return displayer({
+                { icon,          iconHighlight },
+                tailForDisplay .. coordinates,
+                { pathToDisplay, "TelescopeResultsComment" },
+            })
+        end
+
+        return originalEntryTable
+    end
+
+    require("telescope.builtin").lsp_definitions(options)
+end
+
+function telescopePickers.prettyDiagnostics(localOptions)
+    if localOptions ~= nil and type(localOptions) ~= "table" then
+        print("Options must be a table.")
+        return
+    end
+
+    local options = localOptions or {}
+
+    local originalEntryMaker = telescopeMakeEntryModule.gen_from_diagnostics(options)
+
+    options.entry_maker = function(line)
+        local originalEntryTable = originalEntryMaker(line)
+
+        local displayer = telescopeEntryDisplayModule.create({
+            separator = " ", -- Telescope will use this separator between each entry item
+            items = {
+                { width = fileTypeIconWidth },
+                { width = nil },
+                { remaining = true },
+            },
+        })
+
+
+        local signs = (function()
+            if options.no_sign then
+                return
+            end
+            local signs = {}
+            local type_diagnostic = vim.diagnostic.severity
+            for _, severity in ipairs(type_diagnostic) do
+                local status, sign = pcall(function()
+                    -- only the first char is upper all others are lowercalse
+                    return vim.trim(vim.fn.sign_getdefined("DiagnosticSign" .. severity:lower():gsub("^%l", string.upper))
+                        [1].text)
+                end)
+                if not status then
+                    sign = severity:sub(1, 1)
+                end
+                signs[severity] = sign
+            end
+            return signs
+        end)()
+
+        originalEntryTable.display = function(entry)
+            local tail, pathToDisplay = telescopePickers.getPathAndTail(entry.filename)
+            local tailForDisplay = tail .. " "
+            local icon, iconHighlight = telescopeUtilities.get_devicons(tail)
+            local coordinates = string.format("  %s:%s ", entry.lnum, entry.col)
+
+
+            local line_info = {
+                (signs and signs[entry.type] .. " " or ""),
+                "DiagnosticSign" .. entry.type,
+            }
+
+            return displayer({
+                line_info,
+                pathToDisplay .. "/" .. tail,
+                { entry.text, "TelescopeResultsComment" },
+            })
+        end
+
+        return originalEntryTable
+    end
+
+    require("telescope.builtin").diagnostics(options)
+end
+
 function telescopePickers.prettyLspImplementations(localOptions)
     if localOptions ~= nil and type(localOptions) ~= "table" then
         print("Options must be a table.")
