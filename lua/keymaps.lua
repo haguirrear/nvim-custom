@@ -67,4 +67,15 @@ end
 vim.keymap.set('n', '<leader>tm', ':lua ToggleLineNumbers()<CR>',
   { desc = "Toggle line numbers", noremap = true, silent = true })
 
+-- Noice
+-- Not working yet
+vim.keymap.set("c", "<S-Enter>", function()
+  require("noice").redirect(vim.fn.getcmdline())
+end, { desc = "Redirect Cmdline", noremap = true })
+
+vim.keymap.set("n", "<leader>Me", ":Noice echo<CR>", {
+  desc = "Show echo messages",
+  noremap = true
+})
+
 -- vim: ts=2 sts=2 sw=2 et

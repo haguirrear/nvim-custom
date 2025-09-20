@@ -46,7 +46,12 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    signature = { enabled = true },
+    signature = {
+      enabled = false,
+      window = {
+        show_documentation = false,
+      }
+    },
     keymap = {
       preset = 'enter',
       -- ['<Tab>'] = { 'fallback' },
@@ -55,7 +60,8 @@ return {
     },
     cmdline = {
       keymap = {
-        ['<CR>'] = { 'select_and_accept', 'fallback' },
+        preset = "none"
+        -- ['<CR>'] = { 'select_and_accept', 'fallback' },
       }
 
     },
@@ -73,10 +79,17 @@ return {
           auto_insert = true,
         },
       },
-      documentation = { auto_show = false },
+      documentation = {
+        auto_show = false,
+        window = {
+          border = "rounded",
+        }
+      },
       menu = {
+        border = "rounded",
+        winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
         draw = {
-          padding = { 0, 1 },
+          -- padding = { 0, 1 },
           -- treesitter = { 'lsp' },
           columns = { { 'kind_icon' }, { 'label', "kind", gap = 1 } },
           components = {

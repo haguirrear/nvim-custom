@@ -3,6 +3,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
   },
+  enabled = false,
   config = function()
     local lint = require "lint"
 

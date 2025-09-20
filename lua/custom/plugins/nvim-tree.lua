@@ -41,7 +41,7 @@ return {
       },
       git = {
         enable = true,
-        timeout = 1000,
+        timeout = 5000,
       }
     }
   end,

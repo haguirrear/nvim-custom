@@ -18,7 +18,8 @@ local on_attach = function(client, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+  -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+  nmap('gd', require('custom.helpers.telescope_pickers').prettyLspDefinitions, '[G]oto [D]efinition')
   -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gr', require('custom.helpers.telescope_pickers').prettyLspReferences, '[G]oto [R]eferences')
   nmap('gI', require('custom.helpers.telescope_pickers').prettyLspImplementations, '[G]oto [I]mplementation')
@@ -87,23 +88,23 @@ require("which-key").add({
 
 -- UI customizations
 
-local border = {
-  { "🭽", "FloatBorder" },
-  { "▔", "FloatBorder" },
-  { "🭾", "FloatBorder" },
-  { "▕", "FloatBorder" },
-  { "🭿", "FloatBorder" },
-  { "▁", "FloatBorder" },
-  { "🭼", "FloatBorder" },
-  { "▏", "FloatBorder" },
-}
+-- local border = {
+--   { "🭽", "FloatBorder" },
+--   { "▔", "FloatBorder" },
+--   { "🭾", "FloatBorder" },
+--   { "▕", "FloatBorder" },
+--   { "🭿", "FloatBorder" },
+--   { "▁", "FloatBorder" },
+--   { "🭼", "FloatBorder" },
+--   { "▏", "FloatBorder" },
+-- }
 --
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = opts.border or border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
+-- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+-- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+--   opts = opts or {}
+--   opts.border = opts.border or border
+--   return orig_util_open_floating_preview(contents, syntax, opts, ...)
+-- end
 
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
@@ -195,6 +196,7 @@ local servers = {
   denols = {},
   taplo = {},
   csharp_ls = {},
+  marksman = {},
 }
 
 -- For Deno
@@ -212,6 +214,7 @@ require('neodev').setup()
 
 -- This includes the lsp basic capablities
 local capabilities = require('blink.cmp').get_lsp_capabilities()
+
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'

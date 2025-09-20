@@ -45,26 +45,26 @@ require('lazy').setup({
     version = 'v2.*',
     build = "make install_jsregexp"
   },
-  {
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
-      -- buffer
-      'hrsh7th/cmp-buffer',
-      -- vim cmdline
-      'hrsh7th/cmp-cmdline',
-    },
-  },
+  -- {
+  --   -- Autocompletion
+  --   'hrsh7th/nvim-cmp',
+  --   dependencies = {
+  --     -- Snippet Engine & its associated nvim-cmp source
+  --     'L3MON4D3/LuaSnip',
+  --     'saadparwaiz1/cmp_luasnip',
+  --
+  --     -- Adds LSP completion capabilities
+  --     'hrsh7th/cmp-nvim-lsp',
+  --     'hrsh7th/cmp-path',
+  --
+  --     -- Adds a number of user-friendly snippets
+  --     'rafamadriz/friendly-snippets',
+  --     -- buffer
+  --     'hrsh7th/cmp-buffer',
+  --     -- vim cmdline
+  --     'hrsh7th/cmp-cmdline',
+  --   },
+  -- },
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
@@ -156,33 +156,46 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      "folke/noice.nvim",
+    },
     -- opts = function(_, opts)
     --   -- opts = require('lualine').get_config()
     --   -- table.insert(opts.theme, 'onedark')
     --   table.insert(opts.sections.lualine_c, "encoding")
     -- end
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = 'onedark',
-        component_separators = '|',
-        section_separators = '',
-      },
-      sections = {
-        lualine_b = { 'diff', 'diagnostics' },
-        lualine_c = { { 'filename', path = 1, } }
-      },
-      winbar = {
-        lualine_c = {
-          {
-            "navic",
-            color_correction = nil,
-            navic_opts = nil
+    opts = function(_, opts)
+      return {
+        options = {
+          icons_enabled = true,
+          theme = 'onedark',
+          component_separators = '|',
+          section_separators = '',
+        },
+        sections = {
+          lualine_b = { 'diff', 'diagnostics' },
+          lualine_c = { { 'filename', path = 1, } },
+          lualine_x = {
+            {
+              require("noice").api.statusline.mode.get,
+              cond = require("noice").api.statusline.mode.has,
+              color = { fg = "#ff9e64" },
+            }
+          },
+        },
+        winbar = {
+          lualine_c = {
+            {
+              "navic",
+              color_correction = nil,
+              navic_opts = nil
+            }
           }
         }
       }
-    },
+    end
+    ,
   },
 
   {
