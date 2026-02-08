@@ -21,8 +21,8 @@ return {
   opts = {
     -- Define your formatters
     formatters_by_ft = {
-      graphql = { "prettier", stop_after_first = true },
-      astro = { "prettier", stop_after_first = true },
+      graphql    = { "prettier", stop_after_first = true },
+      astro      = { "prettier", stop_after_first = true },
       javascript = {
         "prettier",
         -- stop_after_first = true,
@@ -30,10 +30,11 @@ return {
         --   "--semi", "true",
         -- }
       },
-      css = {
+      css        = {
         "prettier"
       },
       typescript = { "prettier" },
+      sql        = { "pg_format" },
     },
     -- Set default options
     default_format_opts = {
@@ -49,13 +50,13 @@ return {
       end
       print("formatting with conform")
       return { timeout_ms = 500, lsp_format = "fallback" }
-    end
+    end,
     -- Customize formatters
-    -- formatters = {
-    --   shfmt = {
-    --     prepend_args = { "-i", "2" },
-    --   },
-    -- },
+    formatters = {
+      pg_format = {
+        append_args = { "--no-space-function" },
+      },
+    },
   },
   init = function()
     -- If you want the formatexpr, here is the place to set it
